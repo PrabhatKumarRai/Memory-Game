@@ -127,10 +127,10 @@ function matchBlocks(overlayID, imageName){
                     sessionStorage.setItem("block1", '');
                     sessionStorage.setItem("block2", '');
                 }
+            }           
 
-                if(hiddenBlocks == 1){
-                    endGame();
-                }
+            if(hiddenBlocks == 1){
+                endGame();
             }
         }
 
@@ -147,4 +147,3 @@ function endGame(){
     sessionStorage.setItem("startGame", '');
     alert("Game Over!!! \n" + "Total Score: " + score + "\nFailed Attempts: " + failedAttempts);
 }
-
