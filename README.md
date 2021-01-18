@@ -19,4 +19,4 @@ After 5 seconds, the cards become opaque, now you need to match identical cards 
 => Run the index.html file and start playing the Memory Game.
 
 
-NOTE: "Postman CMS" screenshots are available under the "Project Screenshots" folder.
+NOTE: Screenshots are available under the "Project Screenshots" folder.
