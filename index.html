@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memory Game</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="wrapper">
+
+        <!-- App -->
+        <div class="app">
+            <div class="app-inner">
+                <h1>Memory Game</h1>
+
+                <!-- Generate Blocks -->
+                <div class="generateBlocksContainer">
+                    <input type="number" id="blocksCount" placeholder="enter the number of blocks">
+                    <button type="button" onclick="generateBlocksWithOptions()">Submit</button>
+                </div>
+            </div>
+        </div>
+
+         
+        <!-- Game -->
+        <div class="game">
+
+        </div>
+        <div class="game-options">
+            <button type="button" id="startGame" onclick="showHideOverlayTimer()">Start Game</button>
+            <button type="button" id="restartGame" onclick="location.reload()">Reload Game</button>
+            
+        <h4 class="score-container">Score: <span id="score"></span></h4>
+        <h4 class="failed-attempts-container">Failed Attempts: <span id="failedAttempts"></span></h4>
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
