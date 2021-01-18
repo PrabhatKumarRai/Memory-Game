@@ -1,4 +1,5 @@
 # Memory-Game
+--------------
 Memory Game was a delight of our childhood.
 This is a jQuery and javascript based Memory Game where you first get the option to enter the number of blocks/cards to get included in the game.
 After clicking on the "Start Game" button, the cards reveal their images for a short period (5 seconds).
