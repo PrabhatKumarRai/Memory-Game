@@ -6,6 +6,7 @@ function generateBlocksWithOptions(){
     sessionStorage.setItem("startGame", '');   //Game not started.
     sessionStorage.setItem("hiddenBlocks(+1)", blocksCount+1);    //Total hidden boxes. +1 is for checking the condition that blocks count is > 0 in matchBlocks() function.    
     $(".generateBlocksContainer").css("display", "none");
+    $(".game-rules").css("display", "none");
 
     for(var i=1; i<= blocksCount; i++){
 
@@ -21,7 +22,6 @@ function generateBlocksWithOptions(){
     
     $(".game-options").css("display", "flex");
 }
-
 
 //Hide All Blocks
 function showAllOverlay(){
@@ -43,17 +43,21 @@ function hideSingleOverlay(overlayId){
 //Start Game
 //Show Hide All Overlay 
 function showHideOverlayTimer(){    
-    
-    sessionStorage.setItem("startGame", true);
-    sessionStorage.setItem("block1", '');
-    sessionStorage.setItem("block2", '');
 
     $("#startGame").css("display", "none");
     $(".score-container").css("display", "block");
     $(".failed-attempts-container").css("display", "block");
-
+    
     hideAllOverlay();
-    setTimeout(showAllOverlay, 5000);    //Calls hideAllOverlay function after waiting for 5 seconds
+    setTimeout(function(){
+        showAllOverlay();
+        
+        sessionStorage.setItem("startGame", true);
+        sessionStorage.setItem("block1", '');
+        sessionStorage.setItem("block2", '');
+        sessionStorage.setItem("clickedBlocks", '');
+    }, 5000);    //Calls showAllOverlay function after waiting for 5 seconds
+
         
 }
 
@@ -102,35 +106,49 @@ function updateHiddenBlocks(){
     return hiddenBlocks;
 }
 
+//Update Clicked Blocks
+function updateClickedBlocks(blockID){
+    var clickedBlocks = sessionStorage.getItem("clickedBlocks");
+    clickedBlocks = String(clickedBlocks) + String(blockID);
+    sessionStorage.setItem("clickedBlocks", clickedBlocks);
+    return clickedBlocks;
+}
+
 
 //Match Blocks
 function matchBlocks(overlayID, imageName){
    
     if(sessionStorage.getItem("startGame") == "true"){
 
-        hideSingleOverlay(overlayID);   //Display the image
-        storeBlockValue(imageName);     //Stores image name value in session storage
-        var hiddenBlocks = updateHiddenBlocks();           //Decreases the total hidden blocks by -1 and returns the current hidden blocks
+        var clickedBlocks = String(sessionStorage.getItem("clickedBlocks"));    //Gets the previously clicked blocks
 
-        if(hiddenBlocks > 0){
-            if(sessionStorage.getItem("block1") != '' && sessionStorage.getItem("block2") != ''){
-                // Matching Blocks
-                if(sessionStorage.getItem("block1") == sessionStorage.getItem("block2")){
-                    alert("Yeepee!!! Match Found");                
-                    increaseScore();        //Adds 2 more points                
-                    sessionStorage.setItem("block1", '');
-                    sessionStorage.setItem("block2", '');
-                }
-                else{
-                    alert("Oops!!! Match Not Found");
-                    increaseFailedAttempts();    //Adds 1 failed attempt
-                    sessionStorage.setItem("block1", '');
-                    sessionStorage.setItem("block2", '');
-                }
-            }           
+        if(clickedBlocks.indexOf(String(overlayID)) == -1){      //If the block is not previously clicked then proceed
+            
+            var hiddenBlocks = updateHiddenBlocks();     //Decreases the total hidden blocks by -1 and returns the current hidden blocks
+            hideSingleOverlay(overlayID);   //Display the image
+            storeBlockValue(imageName);     //Stores image name value in session storage (block1 or block2)
+            updateClickedBlocks(overlayID);     //Update the session storage that the block is now clicked so that it can't be clicked/accepted again.
 
-            if(hiddenBlocks == 1){
-                endGame();
+            if(hiddenBlocks > 0){
+                if(sessionStorage.getItem("block1") != '' && sessionStorage.getItem("block2") != ''){
+                    // Matching Blocks
+                    if(sessionStorage.getItem("block1") == sessionStorage.getItem("block2")){
+                        alert("Yeepee!!! Match Found");                
+                        increaseScore();        //Adds 2 more points                
+                        sessionStorage.setItem("block1", '');
+                        sessionStorage.setItem("block2", '');
+                    }
+                    else{
+                        alert("Oops!!! Match Not Found");
+                        increaseFailedAttempts();    //Adds 1 failed attempt
+                        sessionStorage.setItem("block1", '');
+                        sessionStorage.setItem("block2", '');
+                    }
+                }           
+    
+                if(hiddenBlocks == 1){
+                    endGame();
+                }
             }
         }
 
@@ -139,11 +157,23 @@ function matchBlocks(overlayID, imageName){
     
 }
 
+
+//Delete Storage Items
+function removeStorageItems(){
+    sessionStorage.removeItem("startGame");
+    sessionStorage.removeItem("block1");
+    sessionStorage.removeItem("block2");
+    sessionStorage.removeItem("hiddenBlocks(+1)");
+    sessionStorage.removeItem("clickedBlocks");
+}
+removeStorageItems();
+
 //Game Ends
 function endGame(){
     var score = getCurrentScore();
     var failedAttempts = getCurrentFailedAttempts();
 
-    sessionStorage.setItem("startGame", '');
+    removeStorageItems();
+
     alert("Game Over!!! \n" + "Total Score: " + score + "\nFailed Attempts: " + failedAttempts);
 }
