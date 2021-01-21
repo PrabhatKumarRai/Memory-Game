@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memory Game</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="wrapper">
+
+        <!-- App -->
+        <div class="app">
+            <div class="app-inner">
+                <h1>Memory Game</h1>
+
+                <!-- Generate Blocks -->
+                <div class="generateBlocksContainer">
+                    <input type="number" id="blocksCount" placeholder="enter the number of cards">
+                    <button type="button" onclick="generateBlocksWithOptions()">Submit</button>
+                </div>
+
+                <div class="game-rules">
+                    <h3>How to Play??</h3>
+                    <ul>
+                        <li>Enter the number of cards to be included in the game and click the submit button.</li>
+                        <li>Click on the "Start Game" button to start the game.</li>
+                        <li>All the cards will reveal thier images for a short period.</li>
+                        <li>As the cards gets covered, match the identical cards in the pair of 2 to increase your score.</li>
+                        <li>If you matched non-identical cards, Failed Attempts will increase.</li>
+                        <li>On every successful match your score increase by 2.</li>
+                        <li>On every un-successful match, Failed Attempt increases by 1.</li>
+                        <li>Max. Clicks are calculated based on number of identical cards.</li>
+                        <li>Clicks decrease as you click on cards in the pair of 2.</li>
+                        <li>Game will end automatically if "Clicks Left" is 0.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+         
+        <!-- Game -->
+        <div class="game">
+
+        </div>
+        <div class="game-options">
+            <button type="button" id="startGame" onclick="showHideOverlayTimer()">Start Game</button>
+            <button type="button" id="restartGame" onclick="location.reload()">Reload Game</button>
+            <button type="button" id="endGame" onclick="endGame()">End Game</button>
+            
+        <h4 class="score-container">Score: <span id="score"></span></h4>
+        <h4 class="failed-attempts-container">Failed Attempts: <span id="failedAttempts"></span></h4>
+        <h4 class="failed-attempts-container">Clicks Left: <span id="totalClicks"></span></h4>
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
